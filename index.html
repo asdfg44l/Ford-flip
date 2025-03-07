@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>6-Grid Flip Card Game</title>
+    <style>
+        body {
+            text-align: center;
+            font-family: Arial, sans-serif;
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(4, 100px);
+            gap: 10px;
+            justify-content: center;
+            margin: 20px;
+        }
+        .card {
+            width: 100px;
+            height: 100px;
+            background-color: gray;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 24px;
+            cursor: pointer;
+            background-size: cover;
+            background-position: center;
+        }
+        .hidden {
+            background-color: gray;
+            background-image: none !important;
+        }
+    </style>
+</head>
+<body>
+    <h1>12-Grid Flip Card Game</h1>
+    <div class="grid" id="gameGrid"></div>
+    <script>
+        const imagesPools = ["image1.png", "image2.png", "image3.png"]
+        const repeatTimes = 12 / imagesPools.length
+        
+        const images = imagesPools.join(',').concat(',').repeat(repeatTimes).split(',')
+        images.pop()
+        
+        images.sort(() => Math.random() - 0.5);
+        let flippedCards = [];
+        let matchedCards = [];
+
+        function createGrid() {
+            const grid = document.getElementById("gameGrid");
+            images.forEach((image, index) => {
+                let card = document.createElement("div");
+                card.classList.add("card", "hidden");
+                card.dataset.index = index;
+                card.dataset.image = image;
+                card.onclick = () => flipCard(card);
+                grid.appendChild(card);
+            });
+        }
+
+        function flipCard(card) {
+            if (flippedCards.length < 2 && !card.classList.contains("flipped") && !matchedCards.includes(card)) {
+                card.style.backgroundImage = `url(${card.dataset.image})`;
+                card.classList.remove("hidden");
+                card.classList.add("flipped");
+                flippedCards.push(card);
+            }
+
+            if (flippedCards.length === 2) {
+                setTimeout(checkMatch, 300);
+            }
+        }
+
+        function checkMatch() {
+            if (flippedCards[0].dataset.image === flippedCards[1].dataset.image) {
+                matchedCards.push(...flippedCards);
+                flippedCards = [];
+            } else {
+                flippedCards.forEach(card => {
+                    card.style.backgroundImage = "none";
+                    card.classList.add("hidden");
+                    card.classList.remove("flipped");
+                });
+                flippedCards = [];
+            }
+            if (matchedCards.length === images.length) {
+                alert("Congratulations! You matched all pairs!");
+            }
+        }
+
+        createGrid();
+    </script>
+</body>
+</html>
