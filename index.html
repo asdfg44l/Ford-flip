@@ -37,14 +37,21 @@
 <body>
     <h1>12-Grid Flip Card Game</h1>
     <div class="grid" id="gameGrid"></div>
+    <button id="resetBtn">Reset Game</button>
     <script>
         const imagesPools = ["image1.png", "image2.png", "image3.png"]
-        const repeatTimes = 12 / imagesPools.length
+
+        function createImages() {
+            const repeatTimes = 12 / imagesPools.length
         
-        const images = imagesPools.join(',').concat(',').repeat(repeatTimes).split(',')
-        images.pop()
-        
-        images.sort(() => Math.random() - 0.5);
+            const images = imagesPools.join(',').concat(',').repeat(repeatTimes).split(',')
+            images.pop()
+            
+            images.sort(() => Math.random() - 0.5);
+
+            return images
+        }
+        let images = createImages();
         let flippedCards = [];
         let matchedCards = [];
 
@@ -91,6 +98,24 @@
             if (matchedCards.length === images.length) {
                 alert("Congratulations! You matched all pairs!");
             }
+        }
+
+        const resetBtn = document.querySelector('#resetBtn')
+        resetBtn.onclick = () => resetGrid()
+        function resetGrid() {
+            // remove all element in gameGrid
+            const gameGrid = document.querySelector('#gameGrid')
+            while (gameGrid.firstChild) {
+                gameGrid.removeChild(gameGrid.firstChild)
+            }
+            // reset images
+            images = createImages()
+            // clear flip & match Array
+            flippedCards = []
+            matchedCards = []
+
+            // restart
+            createGrid()
         }
 
         createGrid();
