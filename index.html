@@ -61,7 +61,10 @@
         }
 
         function flipCard(card) {
-            if (flippedCards.length < 2 && !card.classList.contains("flipped") && !matchedCards.includes(card)) {
+            const isFlipTwoCard = flippedCards.length < 2
+            const isNotFliped = !card.classList.contains("flipped")
+            const isNotMatched = !matchedCards.includes(card)
+            if (isFlipTwoCard && isNotFliped && isNotMatched) {
                 card.style.backgroundImage = `url(${card.dataset.image})`;
                 card.classList.remove("hidden");
                 card.classList.add("flipped");
