@@ -3,46 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>6-Grid Flip Card Game</title>
-    <style>
-        body {
-            text-align: center;
-            font-family: Arial, sans-serif;
-        }
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(4, 100px);
-            gap: 10px;
-            justify-content: center;
-            margin: 20px;
-        }
-        .card {
-            width: 100px;
-            height: 100px;
-            background-color: gray;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 24px;
-            cursor: pointer;
-            background-size: cover;
-            background-position: center;
-        }
-        .hidden {
-            background-color: gray;
-            background-image: none !important;
-        }
-    </style>
+    <title>Flip Card Game</title>
+    <link rel="stylesheet" href="index.css">
 </head>
 <body>
-    <h1>12-Grid Flip Card Game</h1>
-    <div class="grid" id="gameGrid"></div>
-    <button id="resetBtn">Reset Game</button>
+    <h1>Grid Flip Card Game</h1>
+    <div class="gameStartPage">
+        <h2>Select the number of grids</h2>
+        <select class="gameSelect" name="" id="gridSelect">
+            <option value="" selected disabled>--Select--</option>
+            <option value="6">Easy</option>
+            <option value="12">Middle</option>
+            <option value="18">Hard</option>
+        </select>
+    </div>
+    <div class="gameBoard">
+        <div class="grid" id="gameGrid"></div>
+        <button id="resetBtn">Reset Game</button>
+    </div>
     <script>
         const imagesPools = ["image1.png", "image2.png", "image3.png"]
 
-        function createImages() {
-            const repeatTimes = 12 / imagesPools.length
+        function createImages(level) {
+            const repeatTimes = level / imagesPools.length
         
             const images = imagesPools.join(',').concat(',').repeat(repeatTimes).split(',')
             images.pop()
@@ -51,9 +34,23 @@
 
             return images
         }
-        let images = createImages();
+        let images = []
         let flippedCards = [];
         let matchedCards = [];
+
+        // 選擇格子數後再進行初始化
+        const gridSelect = document.getElementById('gridSelect')
+        const gameStartPage = document.querySelector('.gameStartPage')
+        const gameBoard = document.querySelector('.gameBoard')
+        gridSelect.onchange = (e) => {
+            const level = e.target.value
+            images = createImages(level)
+            gameStartPage.classList.add('settled')
+            createGrid()
+            const grid = document.getElementById("gameGrid");
+            if(level > 12) grid.classList.add('hard')
+            gameBoard.classList.add('start')
+        }
 
         function createGrid() {
             const grid = document.getElementById("gameGrid");
@@ -118,7 +115,8 @@
             createGrid()
         }
 
-        createGrid();
+        
+        
     </script>
 </body>
 </html>
