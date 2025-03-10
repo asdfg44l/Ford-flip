@@ -111,8 +111,11 @@
             flippedCards = []
             matchedCards = []
 
-            // restart
-            createGrid()
+            // Back to level select page
+            gameStartPage.classList.remove('settled')
+            gameBoard.classList.remove('start')
+            // 重置 select
+            gridSelect.value = ""
         }
 
         
