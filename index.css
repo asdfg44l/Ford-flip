@@ -2,6 +2,7 @@ body {
     text-align: center;
     font-family: Arial, sans-serif;
 }
+
 .grid {
     display: grid;
     grid-template-columns: repeat(3, 100px);
@@ -29,15 +30,33 @@ body {
     background-image: none !important;
 }
 .gameSelect {
+    margin-top: 15px;
     padding: 5px 10px;
     font-size: 16px;
 }
+.gameLayout {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    background-color:#FF9D00; 
+    align-items: center;
+    overflow: hidden;
+}
+.gameBoard, .gameStartPage {
+    display: block;
+    position: absolute;
+    top: 20%;
+}
+.gameStartPage {
+    transition: all 0.8s;
+}
 .gameStartPage.settled {
-    display: none;
+    transform: translateX(-200vw);
 }
 .gameBoard {
-    display: none;
+    transition: all 0.2s 0.3s;
+    transform: translateX(200vw);
 }
 .gameBoard.start {
-    display: block;
+    transform: unset;
 }

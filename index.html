@@ -4,23 +4,28 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Flip Card Game</title>
+    <link rel="stylesheet" href="_reset.css">
+    <link rel="stylesheet" href="_base.css">
     <link rel="stylesheet" href="index.css">
 </head>
 <body>
-    <h1>Grid Flip Card Game</h1>
-    <div class="gameStartPage">
-        <h2>Select the number of grids</h2>
-        <select class="gameSelect" name="" id="gridSelect">
-            <option value="" selected disabled>--Select--</option>
-            <option value="6">Easy</option>
-            <option value="12">Middle</option>
-            <option value="18">Hard</option>
-        </select>
+    <div class="gameLayout">
+        <h1>Grid Flip Card Game</h1>
+        <div class="gameStartPage">
+            <h2>Select the number of grids</h2>
+            <select class="gameSelect" name="" id="gridSelect">
+                <option value="" selected disabled>--Select--</option>
+                <option value="6">Easy</option>
+                <option value="12">Middle</option>
+                <option value="18">Hard</option>
+            </select>
+        </div>
+        <div class="gameBoard">
+            <div class="grid" id="gameGrid"></div>
+            <button id="resetBtn">Reset Game</button>
+        </div>
     </div>
-    <div class="gameBoard">
-        <div class="grid" id="gameGrid"></div>
-        <button id="resetBtn">Reset Game</button>
-    </div>
+    
     <script>
         const imagesPools = ["image1.png", "image2.png", "image3.png"]
 
@@ -100,11 +105,6 @@
         const resetBtn = document.querySelector('#resetBtn')
         resetBtn.onclick = () => resetGrid()
         function resetGrid() {
-            // remove all element in gameGrid
-            const gameGrid = document.querySelector('#gameGrid')
-            while (gameGrid.firstChild) {
-                gameGrid.removeChild(gameGrid.firstChild)
-            }
             // reset images
             images = createImages()
             // clear flip & match Array
@@ -114,6 +114,16 @@
             // Back to level select page
             gameStartPage.classList.remove('settled')
             gameBoard.classList.remove('start')
+
+            //
+            // remove all element in gameGrid
+            const gameGrid = document.querySelector('#gameGrid')
+            setTimeout(() => {
+                while (gameGrid.firstChild) {
+                gameGrid.removeChild(gameGrid.firstChild)
+            }
+            }, 1000)
+
             // 重置 select
             gridSelect.value = ""
         }
