@@ -27,9 +27,18 @@
     </div>
     
     <script>
-        const imagesPools = ["image1.png", "image2.png", "image3.png"]
+        // 隨機取三張圖
+        function getImagesPools() {
+            const defaultImagesPools = ["image1.png", "image2.png", "image3.png", "image4.png"]
+            // shaffle
+            defaultImagesPools.sort(() => Math.random() - 0.5)
+            
+            return defaultImagesPools.slice(0, 3)
+        }
+
 
         function createImages(level) {
+            const imagesPools = getImagesPools()
             const repeatTimes = level / imagesPools.length
         
             const images = imagesPools.join(',').concat(',').repeat(repeatTimes).split(',')
