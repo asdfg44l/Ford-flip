@@ -18,7 +18,7 @@
                 <option value="" selected disabled>--Select--</option>
                 <option value="6">Easy</option>
                 <option value="12">Middle</option>
-                <option value="18">Hard</option>
+                <option value="20">Hard</option>
             </select>
         </div>
         <div class="gameBoard">
@@ -33,22 +33,31 @@
     
     <script type="module">
         import { floatPlus } from './main.js'
-        // 隨機取三張圖
-        function getImagesPools() {
+        // 根據 level 決定
+        function imageAmount(level) {
+            let imageAmountPools = [3]
+            if(level >= 12) imageAmountPools = [level / 2, level / 4]
+
+            imageAmountPools.sort(() => Math.random() - 0.5)
+
+            return imageAmountPools.pop()
+        }
+
+        function getImagesPools(level) {
             const fileExtension = 'webp'
-            const defaultImagesPools = ["image1", "image2", "image3", "image4", "image5"].map((item) => `${item}.${fileExtension}`)
+            const defaultImagesPools = ["image1", "image2", "image3", "image4", "image5", "image6"].map((item) => `${item}.${fileExtension}`)
             
             // shaffle
             defaultImagesPools.sort(() => Math.random() - 0.5)
             
-            return defaultImagesPools.slice(0, 3)
+            return defaultImagesPools.slice(0, imageAmount(level))
         }
 
 
         function createImages(level) {
-            const imagesPools = getImagesPools()
+            const imagesPools = getImagesPools(level)
             const repeatTimes = level / imagesPools.length
-        
+            
             const images = imagesPools.join(',').concat(',').repeat(repeatTimes).split(',')
             images.pop()
             
@@ -71,7 +80,16 @@
             createGrid()
             // 根據難度選擇卡片排版
             const grid = document.getElementById("gameGrid");
-            if(level > 12) grid.classList.add('hard')
+            switch(+level) {
+                case 12:
+                  grid.classList.add('middle')
+                  break;
+                case 20:
+                  grid.classList.add('hard')
+                  break;
+                default:
+                  break
+            }
             gameBoard.classList.add('start')
             //開始計時
             startTimer()
@@ -158,11 +176,12 @@
             // stop timer
             clearInterval(timerInterval)
             // remove all element in gameGrid
-            const gameGrid = document.querySelector('#gameGrid')
+            const gameGrid = document.getElementById('gameGrid')
             setTimeout(() => {
                 while (gameGrid.firstChild) {
-                gameGrid.removeChild(gameGrid.firstChild)
-            }
+                    gameGrid.removeChild(gameGrid.firstChild)
+                }
+                gameGrid.classList = ['grid']
             }, 1000)
 
             // 重置 select
