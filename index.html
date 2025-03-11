@@ -95,30 +95,48 @@
                 card.style.backgroundImage = `url(${card.dataset.image})`;
                 card.classList.remove("hidden");
                 card.classList.add("flipped");
-                flippedCards.push(card);
+                flippedCards.push(card)
             }
 
             if (flippedCards.length === 2) {
-                setTimeout(checkMatch, 300);
+                checkMatch()
             }
         }
 
         function checkMatch() {
-            if (flippedCards[0].dataset.image === flippedCards[1].dataset.image) {
-                matchedCards.push(...flippedCards);
-                flippedCards = [];
-            } else {
-                flippedCards.forEach(card => {
-                    card.style.backgroundImage = "none";
-                    card.classList.add("hidden");
-                    card.classList.remove("flipped");
-                });
-                flippedCards = [];
+            // 翻到相同的 card
+            if (flippedCards.length > 0 && flippedCards[0].dataset.image === flippedCards[1].dataset.image) {
+                const matched = () => {
+                    matchedCards.push(...flippedCards);
+                    flippedCards = [];
+                }
+
+                // 已經翻到最後一組 card，並且已經翻一張的時候要等一下才比對，因為要等牌翻完
+                if(matchedCards.length === images.length - 2 && flippedCards.length === 2 ) {
+                    clearInterval(timerInterval)
+                    setTimeout(() => {
+                        matched()
+                        alert("Congratulations! You matched all pairs!");
+                    }, 70)
+                } else {
+                    matched()
+                }
+            } 
+            // 翻到不同的 card
+            else {
+                setTimeout(() => {
+                    flippedCards.forEach(card => {
+                        card.style.backgroundImage = "none";
+                        card.classList.add("hidden");
+                        card.classList.remove("flipped");
+                    });
+                    flippedCards = [];
+                }, 300)
             }
-            if (matchedCards.length === images.length) {
-                clearInterval(timerInterval)
-                alert("Congratulations! You matched all pairs!");
-            }
+            // if (matchedCards.length === images.length) {
+            //     clearInterval(timerInterval)
+            //     alert("Congratulations! You matched all pairs!");
+            // }
         }
 
         const resetBtn = document.querySelector('#resetBtn')
