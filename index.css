@@ -37,6 +37,7 @@ body {
 .gameLayout {
     display: flex;
     flex-direction: column;
+    position: relative;
     height: 100vh;
     background-color:#FF9D00; 
     align-items: center;
@@ -59,4 +60,8 @@ body {
 }
 .gameBoard.start {
     transform: unset;
+}
+.timerWrap {
+    font-size: 24px;
+    margin-bottom: 40px;
 }

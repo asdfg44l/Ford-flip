@@ -22,12 +22,17 @@
             </select>
         </div>
         <div class="gameBoard">
+            <div class="timerWrap">
+                <span>Timer:</span>
+                <span class="timer">0</span>
+            </div>
             <div class="grid" id="gameGrid"></div>
             <button id="resetBtn">Reset Game</button>
         </div>
     </div>
     
-    <script>
+    <script type="module">
+        import { floatPlus } from './main.js'
         // 隨機取三張圖
         function getImagesPools() {
             const defaultImagesPools = ["image1.png", "image2.png", "image3.png", "image4.png"]
@@ -52,7 +57,7 @@
         let images = []
         let flippedCards = [];
         let matchedCards = [];
-
+        let timerInterval = null;
         // 選擇格子數後再進行初始化
         const gridSelect = document.getElementById('gridSelect')
         const gameStartPage = document.querySelector('.gameStartPage')
@@ -62,9 +67,12 @@
             images = createImages(level)
             gameStartPage.classList.add('settled')
             createGrid()
+            // 根據難度選擇卡片排版
             const grid = document.getElementById("gameGrid");
             if(level > 12) grid.classList.add('hard')
             gameBoard.classList.add('start')
+            //開始計時
+            startTimer()
         }
 
         function createGrid() {
@@ -108,6 +116,7 @@
                 flippedCards = [];
             }
             if (matchedCards.length === images.length) {
+                clearInterval(timerInterval)
                 alert("Congratulations! You matched all pairs!");
             }
         }
@@ -125,7 +134,8 @@
             gameStartPage.classList.remove('settled')
             gameBoard.classList.remove('start')
 
-            //
+            // stop timer
+            clearInterval(timerInterval)
             // remove all element in gameGrid
             const gameGrid = document.querySelector('#gameGrid')
             setTimeout(() => {
@@ -138,7 +148,13 @@
             gridSelect.value = ""
         }
 
-        
+        function startTimer() {
+            const timer = document.querySelector('.timer')
+            timer.textContent = 0
+            timerInterval = setInterval(() => {                
+                timer.textContent = floatPlus(+timer.textContent, 0.01)
+            }, 10)
+        }
         
     </script>
 </body>
