@@ -1,0 +1,109 @@
+@use 'sass:map';
+@use 'element-plus/theme-chalk/src/mixins/function.scss' as *;
+
+$common-component-size: (
+  'large': 3.125rem,
+  'default': 32px,
+  'small': 24px,
+);
+
+/* just override what you need */
+@forward 'element-plus/theme-chalk/src/common/var.scss' with (
+  $colors: (
+    primary: (
+      base: #FF9933,
+    ),
+    info: (
+      base: #3f93fc,
+    ),
+    success: (
+      base: #6dd36b,
+    ),
+    warning: (
+      base: #ffc75b,
+    ),
+    danger: (
+      base: #fc5775,
+    ),
+    error: (
+      base: #fc5775,
+    ),
+  ),
+  $text-color: (
+    regular: #333333,
+    placeholder: rgba(#333333, 0.6),
+    disabled: #666666,
+  ),
+  $border-radius: (
+    base: 8px,
+    small: 4px,
+  ),
+  $table: (
+    'header-text-color': getCssVar('text-color', 'regular'),
+    'header-bg-color': #242632,
+    'text-color': #ffffff,
+    'bg-color': #242632,
+    'tr-bg-color': #242632,
+    'expanded-cell-bg-color': #242632,
+    'row-hover-bg-color': #313247,
+    'current-row-bg-color': #313247,
+    'border-color': rgba(#313247, 0.6),
+    'fixed-left-column': 4px 0px 8px 0px rgba(0, 0, 0, 0.4),
+    'fixed-right-column': 4px 0px 8px 0px rgba(0, 0, 0, 0.4),
+  ),
+  $scrollbar: (
+    'bg-color': getCssVar('text-color', 'regular'),
+    'hover-bg-color': getCssVar('text-color', 'regular'),
+  ),
+  $common-component-size: map.merge((), $common-component-size),
+  $disabled: (
+    'text-color': #8087b0,
+    'bg-color': 'white',
+  ),
+  $input: (
+    'border-color': #8087b0,
+    'hover-border-color': #8087b0,
+    'focus-border-color': #3ff7de,
+  ),
+  $input-font-size: (
+    'default': 14px,
+  ),
+  $select: (
+    // 'font-size': 14px,
+    // 'input-color': #8087b0,
+    // 'input-font-size': 14px,
+    'input-focus-border-color': #3ff7de,
+  ),
+  $select-option: (
+    'text-color': #8087b0,
+    'selected-text-color': #8080b0,
+  ),
+  $datepicker: (
+    'text-color': #ffffff,
+    // 'header-text-color': #ffffff,
+    'inrange-bg-color': #313247,
+    'inrange-hover-bg-color': #313247,
+    'border-color': #242632,
+    'inner-border-color': #8080b0,
+    'icon-color': #ffffff,
+  ),
+  $date-editor: (
+    'width': 100%,
+    'monthrange-width': 300px,
+    'daterange-width': 100%,
+    'datetimerange-width': 400px,
+  ),
+  $switch: (
+    'on-color': #6dd36b,
+    'off-color': #8087b0,
+  ),
+  $popper: (
+    'border-radius': '16px',
+  ),
+  $dropdown: (
+    'menu-box-shadow': 0px 4px 24px 0px #00000066,
+    'menuItem-hover-fill': #313247,
+  )
+);
+
+@use './dark.scss';

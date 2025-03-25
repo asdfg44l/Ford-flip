@@ -36,6 +36,12 @@ const buttonColors = {
 export default defineConfig({
   important: '.windicss',
   darkMode: 'class',
+  extract: {
+    include: ['src/**/*.{vue,html,jsx,tsx}'],
+    exclude: ['node_modules', '.git'],
+  },
+  attributify: true,
+
   theme: {
     extend: {
       screens: {

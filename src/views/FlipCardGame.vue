@@ -1,19 +1,21 @@
 <template>
-  <div class="flex flex-col relative h-screen bg-yellow-500 items-center overflow-hidden">
-    <h1 class="text-4xl my-7">Grid Flip Card Game</h1>
+  <div class="flex flex-col relative h-100vh bg-primary-2 bg-opacity-20 items-center overflow-hidden">
+    <h1 class="text-4xl my-7 text-primary-1">Grid Flip Card Game</h1>
     <div class="block absolute top-1/5 transition-all duration-800" :class="{ 'transform -translate-x-200vw': gameStarted }">
-      <h2 class="text-3xl my-4">選擇格子數量</h2>
-      <select class="mt-4 px-2.5 py-1.5 text-base" v-model="selectedLevel" @change="startGame">
-        <option value="" selected disabled>--選擇--</option>
-        <option value="6">簡單</option>
-        <option value="12">中等</option>
-        <option value="20">困難</option>
-      </select>
+      <h2 class="text-3xl my-4 text-secondary-3">選擇格子數量</h2>
+      <TElSelect
+        class="mt-4"
+        :model-value="selectedLevel"
+        name="difficulty"
+        input-class="text-base"
+        :options="difficultyOptions"
+        @update:model-value="startGame"
+      />
     </div>
     <div class="block absolute top-1/5 transition-all duration-200 delay-300 transform translate-x-200vw" :class="{ 'transform-none': gameStarted }">
-      <div class="text-2xl mb-10">
-        <span>計時器:</span>
-        <span class="timer">{{ timer.toFixed(2) }}</span>
+      <div class="text-2xl mb-10 text-center">
+        <span class="text-secondary-3">計時器:</span>
+        <span class="timer font-bold text-primary-1">{{ timer.toFixed(2) }}</span>
       </div>
       <div class="grid gap-2.5 justify-center m-5" 
         :class="{
@@ -25,19 +27,27 @@
         <div 
           v-for="(image, index) in images" 
           :key="index" 
-          class="w-25 h-25 bg-gray-500 flex justify-center items-center text-2xl cursor-pointer bg-cover bg-center"
-          :class="{ 'bg-gray-500 !bg-none': !isFlipped(index) }"
+          class="w-25 h-25 bg-secondary-2 flex justify-center items-center text-2xl cursor-pointer bg-cover bg-center rounded-lg shadow-md hover:shadow-lg"
+          :class="{ 'bg-secondary-2 !bg-none': !isFlipped(index) }"
           :style="cardStyle(index)"
           @click="flipCard(index)"
         ></div>
       </div>
-      <button class="mt-5 px-5 py-2.5 text-base cursor-pointer bg-green-500 text-white border-0 rounded hover:bg-green-600" @click="resetGame">重置遊戲</button>
+      <el-button 
+        type="success" 
+        class="mt-5 btn btn-lg" 
+        @click="resetGame"
+      >
+        重置遊戲
+      </el-button>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
 import { ref, computed, onUnmounted } from 'vue'
+// 自動引入組件，不需要手動導入
+// import TElSelect from '@/components/TElSelect.vue'
 
 // 根據 level 決定圖片數量
 function imageAmount(level: number): number {
@@ -86,6 +96,12 @@ const flippedCards = ref<number[]>([])
 const matchedCards = ref<number[]>([])
 const timer = ref<number>(0)
 const timerInterval = ref<number | null>(null)
+const difficultyOptions = [
+  { id: '1', label: '--選擇--', value: '', disabled: true },
+  { id: '2', label: '簡單', value: '6' },
+  { id: '3', label: '中等', value: '12' },
+  { id: '4', label: '困難', value: '20' }
+]
 const gridClass = computed(() => {
   const level = parseInt(selectedLevel.value)
   if (level === 12) return 'middle'
@@ -94,7 +110,8 @@ const gridClass = computed(() => {
 })
 
 // 方法
-function startGame() {
+function startGame(value: string) {  
+  selectedLevel.value = value
   const level = parseInt(selectedLevel.value)
   if (!level) return
   
@@ -188,4 +205,21 @@ function stopTimer() {
 onUnmounted(() => {
   stopTimer()
 })
-</script> 
+</script>
+
+<style scoped>
+.timer {
+  display: inline-block;
+  min-width: 80px;
+  text-align: right;
+}
+
+.w-25 {
+  width: 6.25rem;
+  height: 6.25rem;
+}
+
+.h-25 {
+  height: 6.25rem;
+}
+</style> 
