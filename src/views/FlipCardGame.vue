@@ -25,7 +25,7 @@
         }" 
         ref="gameGrid">
         <div 
-          v-for="(image, index) in images" 
+          v-for="(image, index) in cardDeck" 
           :key="index" 
           class="w-25 h-25 bg-secondary-2 flex justify-center items-center text-2xl cursor-pointer bg-cover bg-center rounded-lg shadow-md hover:shadow-lg"
           :class="{ 'bg-secondary-2 !bg-none': !isFlipped(index) }"
@@ -91,7 +91,7 @@ function floatPlus(a: number, b: number): number {
 // 響應式數據
 const selectedLevel = ref<string>('')
 const gameStarted = ref<boolean>(false)
-const images = ref<string[]>([])
+const cardDeck = ref<string[]>([])
 const flippedCards = ref<number[]>([])
 const matchedCards = ref<number[]>([])
 const timer = ref<number>(0)
@@ -115,7 +115,7 @@ function startGame(value: string) {
   const level = parseInt(selectedLevel.value)
   if (!level) return
   
-  images.value = createImages(level)
+  cardDeck.value = createImages(level)
   gameStarted.value = true
   startTimer()
 }
@@ -126,7 +126,7 @@ function resetGame() {
   gameStarted.value = false
   flippedCards.value = []
   matchedCards.value = []
-  images.value = []
+  cardDeck.value = []
   
   // 停止計時器
   stopTimer()
@@ -153,7 +153,7 @@ function isFlipped(index: number): boolean {
 
 function cardStyle(index: number) {
   if (isFlipped(index)) {
-    return { backgroundImage: `url(${images.value[index]})` }
+    return { backgroundImage: `url(${cardDeck.value[index]})` }
   }
   return {}
 }
@@ -162,14 +162,14 @@ function checkMatch() {
   const [firstIndex, secondIndex] = flippedCards.value
   
   // 翻到相同的卡片
-  if (images.value[firstIndex] === images.value[secondIndex]) {
+  if (cardDeck.value[firstIndex] === cardDeck.value[secondIndex]) {
     const matched = () => {
       matchedCards.value.push(...flippedCards.value)
       flippedCards.value = []
     }
     
     // 已經翻到最後一組卡片
-    if (matchedCards.value.length === images.value.length - 2 && flippedCards.value.length === 2) {
+    if (matchedCards.value.length === cardDeck.value.length - 2) {
       stopTimer()
       setTimeout(() => {
         matched()
