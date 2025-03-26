@@ -1,15 +1,15 @@
 <template>
   <div
-    class="flex flex-col relative h-100vh bg-primary-2 bg-opacity-20 items-center overflow-hidden"
+    class="flex flex-col relative min-h-100vh bg-primary-2 bg-opacity-20 items-center overflow-hidden pb-24 xs:pb-32"
   >
-    <h1 class="text-4xl my-7 text-primary-1">《Ford來摸肚》</h1>
+    <h1 class="text-4xl sm:text-3xl xs:text-2xl my-5 text-primary-1">《Ford來摸肚》</h1>
     <div
-      class="block absolute top-1/5 transition-all duration-800"
+      class="block absolute top-1/5 transition-all duration-800 w-full px-4 text-center"
       :class="{ 'transform -translate-x-200vw': countdownStarted }"
     >
-      <h2 class="text-3xl my-4 text-secondary-3">選擇格子數量</h2>
+      <h2 class="text-3xl sm:text-2xl xs:text-xl my-4 text-secondary-3">選擇格子數量</h2>
       <TElSelect
-        class="mt-4"
+        class="mt-4 w-full max-w-xs mx-auto"
         :model-value="selectedLevel"
         name="difficulty"
         input-class="text-base"
@@ -21,15 +21,15 @@
     <!-- 倒數計時畫面 -->
     <div
       v-if="countdownStarted && !gameStarted"
-      class="block absolute top-1/3 flex flex-col items-center justify-center"
+      class="block absolute top-1/3 flex flex-col items-center justify-center w-full px-4"
     >
-      <h2 class="text-4xl font-bold text-primary-1 mb-4">遊戲即將開始</h2>
-      <div class="countdown-timer text-9xl font-bold text-primary-1">
+      <h2 class="text-4xl sm:text-3xl xs:text-2xl font-bold text-primary-1 mb-4">遊戲即將開始</h2>
+      <div class="countdown-timer font-bold text-primary-1">
         {{ countdownValue }}
       </div>
-      <p class="text-xl text-secondary-3 mt-4">準備好了嗎？</p>
+      <p class="text-xl sm:text-lg xs:text-base text-secondary-3 mt-4">準備好了嗎？</p>
       <!-- 加載進度條 -->
-      <div class="mt-8 w-60 bg-gray-200 rounded-full h-2.5 dark:bg-gray-700">
+      <div class="mt-8 w-60 sm:w-48 xs:w-40 bg-gray-200 rounded-full h-2.5 dark:bg-gray-700">
         <div
           class="bg-primary-1 h-2.5 rounded-full transition-all duration-300"
           :style="{ width: `${loadingProgress}%` }"
@@ -41,52 +41,54 @@
     </div>
 
     <div
-      class="block absolute top-1/5"
+      class="block absolute top-1/5 w-full px-2 sm:px-4"
       :style="{ display: gameStarted ? 'block' : 'none' }"
     >
-      <div class="text-2xl mb-10 text-center">
+      <div class="text-2xl sm:text-xl xs:text-lg mb-6 sm:mb-4 text-center">
         <span class="text-secondary-3">計時器:</span>
         <span class="timer font-bold text-primary-1">{{
           timer.toFixed(2)
         }}</span>
       </div>
       <div
-        class="grid gap-2.5 justify-center m-5"
-        :class="{
-          'grid-cols-3': !gridClass,
-          'grid-cols-4': gridClass === 'middle',
-          'grid-cols-5': gridClass === 'hard',
-        }"
+        class="grid justify-items-center items-center mx-auto"
+        :class="[
+          !gridClass ? 'grid-cols-3 gap-2.5 sm:gap-2 xs:gap-1.5 w-full max-w-[28rem] mx-auto' : '',
+          gridClass === 'middle' ? 'grid-cols-4 gap-2 sm:gap-1.5 xs:gap-1 w-full max-w-[32rem] mx-auto' : '',
+          gridClass === 'hard' ? 'grid-cols-5 xs:grid-cols-4 gap-2 sm:gap-1.5 xs:gap-1 w-full max-w-[36rem] mx-auto' : ''
+        ]"
         ref="gameGrid"
       >
         <div
           v-for="(image, index) in cardDeck"
           :key="index"
-          class="w-25 h-25 bg-secondary-2 flex justify-center items-center text-2xl cursor-pointer bg-cover bg-center rounded-lg shadow-md hover:shadow-lg"
+          class="card-item bg-secondary-2 text-2xl cursor-pointer bg-cover bg-center rounded-lg shadow-md hover:shadow-lg w-full h-full"
           :class="{ 'bg-secondary-2 !bg-none': !isFlipped(index) }"
           :style="cardStyle(index)"
           @click="flipCard(index)"
         ></div>
       </div>
-      <el-button type="success" class="mt-5 btn btn-lg" @click="resetGame">
-        重置遊戲
-      </el-button>
+      <div class="text-center mt-5">
+        <el-button type="success" class="btn btn-lg xs:btn-md" @click="resetGame">
+          重置遊戲
+        </el-button>
+      </div>
     </div>
 
     <!-- 製作團隊資訊 -->
     <div class="team-info">
       <div class="team-info-content">
         <div class="team-member">
-          <span class="team-role">製作：</span>
-          <span class="team-name">Ford 的右手 ✋</span>
+          <div class="team-role">製作：</div>
+          <div class="team-name">Ford 的右手 ✋</div>
         </div>
         <div class="team-member">
-          <span class="team-role">共同製作 & 肚肚支援：</span>
-          <span class="team-name">Eddie 🤲</span>
+          <div class="team-role">共同製作 & 肚肚支援：</div>
+          <div class="team-name">Eddie 🤲</div>
         </div>
         <div class="team-member">
-          <span class="team-role">照片提供 & 摸肚 & 撩妹總監：</span>
-          <span class="team-name">Ford 😏</span>
+          <div class="team-role">照片提供 & 摸肚 & 撩妹總監：</div>
+          <div class="team-name">Ford 😏</div>
         </div>
       </div>
     </div>
@@ -354,18 +356,113 @@ onUnmounted(() => {
   text-align: right;
 }
 
-.w-25 {
-  width: 6.25rem;
-  height: 6.25rem;
+.card-item {
+  aspect-ratio: 1;
+  max-width: 7rem;
+  max-height: 7rem;
+  width: 100%;
+  height: 100%;
 }
 
-.h-25 {
-  height: 6.25rem;
+/* 不同難度的卡片尺寸調整 */
+.grid-cols-3 .card-item {
+  width: 7rem;
+  height: 7rem;
+}
+
+.grid-cols-4 .card-item {
+  width: 6rem;
+  height: 6rem;
+}
+
+.grid-cols-5 .card-item {
+  width: 4.5rem;
+  height: 4.5rem;
+}
+
+@media (max-width: 768px) {
+  .grid-cols-3 .card-item {
+    width: 6rem;
+    height: 6rem;
+  }
+  
+  .grid-cols-4 .card-item {
+    width: 5rem;
+    height: 5rem;
+  }
+  
+  .grid-cols-5 .card-item {
+    width: 3.8rem;
+    height: 3.8rem;
+  }
+}
+
+@media (max-width: 640px) {
+  .grid-cols-3 .card-item {
+    width: 5.5rem;
+    height: 5.5rem;
+  }
+  
+  .grid-cols-4 .card-item {
+    width: 4.5rem;
+    height: 4.5rem;
+  }
+  
+  .xs\:grid-cols-4 .card-item {
+    width: 4.5rem;
+    height: 4.5rem;
+  }
+}
+
+@media (max-width: 375px) {
+  .grid-cols-3 .card-item {
+    width: 5rem;
+    height: 5rem;
+  }
+  
+  .grid-cols-4 .card-item {
+    width: 4rem;
+    height: 4rem;
+  }
+  
+  .xs\:grid-cols-4 .card-item {
+    width: 4rem;
+    height: 4rem;
+  }
+}
+
+@media (max-width: 320px) {
+  .grid-cols-3 .card-item {
+    width: 4.5rem;
+    height: 4.5rem;
+  }
+  
+  .grid-cols-4 .card-item {
+    width: 3.5rem;
+    height: 3.5rem;
+  }
+  
+  .xs\:grid-cols-4 .card-item {
+    width: 3.5rem;
+    height: 3.5rem;
+  }
 }
 
 .countdown-timer {
   font-size: 8rem;
   animation: pulse 1s infinite;
+}
+
+@media (max-width: 640px) {
+  .countdown-timer {
+    font-size: 6rem;
+  }
+}
+
+@media (max-width: 375px) {
+  .countdown-timer {
+    font-size: 5rem;
+  }
 }
 
 @keyframes pulse {
@@ -386,33 +483,36 @@ onUnmounted(() => {
   bottom: 0;
   left: 0;
   width: 100%;
-  background-color: rgba(0, 0, 0, 0.6);
+  background-color: rgba(0, 0, 0, 0.7);
   color: #fff;
-  padding: 0.7rem 0;
+  padding: 0.6rem 0;
   text-align: center;
   font-size: 0.9rem;
   backdrop-filter: blur(5px);
   border-top: 1px solid rgba(255, 165, 0, 0.3);
+  z-index: 10;
 }
 
 .team-info-content {
   display: flex;
-  flex-direction: column;
-  gap: 0.3rem;
-  max-width: 650px;
+  flex-direction: row;
+  justify-content: center;
+  gap: 1.5rem;
+  max-width: 800px;
   margin: 0 auto;
+  padding: 0 1rem;
 }
 
 .team-member {
   display: flex;
-  justify-content: center;
+  flex-direction: column;
   align-items: center;
-  flex-wrap: wrap;
-  gap: 0.5rem;
 }
 
 .team-role {
   color: #ccc;
+  text-align: center;
+  margin-bottom: 0.2rem;
 }
 
 .team-name {
@@ -420,22 +520,42 @@ onUnmounted(() => {
   font-weight: bold;
 }
 
-.team-warning {
-  color: #ff6b6b;
-  font-size: 0.8rem;
-  margin-top: 0.5rem;
-  font-style: italic;
+@media (max-width: 768px) {
+  .team-info-content {
+    gap: 1.2rem;
+    padding: 0 0.8rem;
+  }
 }
 
-@media (min-width: 640px) {
+@media (max-width: 640px) {
   .team-info-content {
-    flex-direction: row;
-    justify-content: center;
-    gap: 1.5rem;
+    flex-direction: column;
+    gap: 0.3rem;
+    padding: 0 0.5rem;
   }
   
   .team-info {
     padding: 0.5rem 0;
+  }
+  
+  .team-member {
+    margin-bottom: 0.1rem;
+  }
+  
+  .team-role {
+    margin-bottom: 0.1rem;
+  }
+}
+
+@media (max-width: 375px) {
+  .team-info {
+    font-size: 0.7rem;
+    padding: 0.5rem 0;
+  }
+  
+  .team-role, .team-name {
+    font-size: 0.65rem;
+    line-height: 1.2;
   }
 }
 </style>
