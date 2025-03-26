@@ -1,7 +1,7 @@
 <template>
   <div class="flex flex-col relative h-100vh bg-primary-2 bg-opacity-20 items-center overflow-hidden">
     <h1 class="text-4xl my-7 text-primary-1">Grid Flip Card Game</h1>
-    <div class="block absolute top-1/5 transition-all duration-800" :class="{ 'transform -translate-x-200vw': gameStarted }">
+    <div class="block absolute top-1/5 transition-all duration-800" :class="{ 'transform -translate-x-200vw': countdownStarted }">
       <h2 class="text-3xl my-4 text-secondary-3">選擇格子數量</h2>
       <TElSelect
         class="mt-4"
@@ -9,10 +9,21 @@
         name="difficulty"
         input-class="text-base"
         :options="difficultyOptions"
-        @update:model-value="startGame"
+        @update:model-value="startCountdown"
       />
     </div>
-    <div class="block absolute top-1/5 transition-all duration-200 delay-300 transform translate-x-200vw" :class="{ 'transform-none': gameStarted }">
+    
+    <!-- 倒數計時畫面 -->
+    <div 
+      v-if="countdownStarted && !gameStarted"
+      class="block absolute top-1/3 flex flex-col items-center justify-center"
+    >
+      <h2 class="text-4xl font-bold text-primary-1 mb-4">遊戲即將開始</h2>
+      <div class="countdown-timer text-9xl font-bold text-primary-1">{{ countdownValue }}</div>
+      <p class="text-xl text-secondary-3 mt-4">準備好了嗎？</p>
+    </div>
+    
+    <div class="block absolute top-1/5" :style="{ display: gameStarted ? 'block' : 'none' }">
       <div class="text-2xl mb-10 text-center">
         <span class="text-secondary-3">計時器:</span>
         <span class="timer font-bold text-primary-1">{{ timer.toFixed(2) }}</span>
@@ -90,7 +101,10 @@ function floatPlus(a: number, b: number): number {
 
 // 響應式數據
 const selectedLevel = ref<string>('')
+const countdownStarted = ref<boolean>(false)
 const gameStarted = ref<boolean>(false)
+const countdownValue = ref<number>(3)
+const countdownInterval = ref<number | null>(null)
 const cardDeck = ref<string[]>([])
 const flippedCards = ref<number[]>([])
 const matchedCards = ref<number[]>([])
@@ -109,9 +123,31 @@ const gridClass = computed(() => {
   return ''
 })
 
-// 方法
-function startGame(value: string) {  
+// 倒數計時開始
+function startCountdown(value: string) {
   selectedLevel.value = value
+  const level = parseInt(selectedLevel.value)
+  if (!level) return
+  
+  // 設置倒數計時狀態
+  countdownStarted.value = true
+  countdownValue.value = 3
+  
+  // 開始倒數
+  countdownInterval.value = window.setInterval(() => {
+    countdownValue.value -= 1
+    
+    // 倒數結束，開始遊戲
+    if (countdownValue.value <= 0) {
+      clearInterval(countdownInterval.value as number)
+      countdownInterval.value = null
+      startGame()
+    }
+  }, 1000)
+}
+
+// 開始遊戲
+function startGame() {
   const level = parseInt(selectedLevel.value)
   if (!level) return
   
@@ -123,7 +159,9 @@ function startGame(value: string) {
 function resetGame() {
   // 重置狀態
   selectedLevel.value = ''
+  countdownStarted.value = false
   gameStarted.value = false
+  countdownValue.value = 3
   flippedCards.value = []
   matchedCards.value = []
   cardDeck.value = []
@@ -131,6 +169,12 @@ function resetGame() {
   // 停止計時器
   stopTimer()
   timer.value = 0
+  
+  // 停止倒數計時器
+  if (countdownInterval.value !== null) {
+    clearInterval(countdownInterval.value)
+    countdownInterval.value = null
+  }
 }
 
 function flipCard(index: number) {
@@ -204,6 +248,10 @@ function stopTimer() {
 // 組件卸載時清除計時器
 onUnmounted(() => {
   stopTimer()
+  if (countdownInterval.value !== null) {
+    clearInterval(countdownInterval.value)
+    countdownInterval.value = null
+  }
 })
 </script>
 
@@ -221,5 +269,22 @@ onUnmounted(() => {
 
 .h-25 {
   height: 6.25rem;
+}
+
+.countdown-timer {
+  font-size: 8rem;
+  animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
 }
 </style> 
