@@ -72,6 +72,7 @@ export default defineConfig({
       },
     },
   },
+  base: './',
   build: {
     outDir: './docs',
     emptyOutDir: true, // also necessary
