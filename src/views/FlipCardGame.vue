@@ -21,6 +21,14 @@
       <h2 class="text-4xl font-bold text-primary-1 mb-4">遊戲即將開始</h2>
       <div class="countdown-timer text-9xl font-bold text-primary-1">{{ countdownValue }}</div>
       <p class="text-xl text-secondary-3 mt-4">準備好了嗎？</p>
+      <!-- 加載進度條 -->
+      <div class="mt-8 w-60 bg-gray-200 rounded-full h-2.5 dark:bg-gray-700">
+        <div 
+          class="bg-primary-1 h-2.5 rounded-full transition-all duration-300" 
+          :style="{ width: `${loadingProgress}%` }"
+        ></div>
+      </div>
+      <p class="text-sm text-secondary-3 mt-2">圖片加載中... {{ loadingProgress }}%</p>
     </div>
     
     <div class="block absolute top-1/5" :style="{ display: gameStarted ? 'block' : 'none' }">
@@ -105,6 +113,8 @@ const countdownStarted = ref<boolean>(false)
 const gameStarted = ref<boolean>(false)
 const countdownValue = ref<number>(3)
 const countdownInterval = ref<number | null>(null)
+const imagesLoaded = ref<boolean>(false)
+const loadingProgress = ref<number>(0)
 const cardDeck = ref<string[]>([])
 const flippedCards = ref<number[]>([])
 const matchedCards = ref<number[]>([])
@@ -123,6 +133,27 @@ const gridClass = computed(() => {
   return ''
 })
 
+function preloadImages(images: string[]): Promise<void> {
+  return new Promise((resolve, reject) => {
+    let loadedCount = 0
+    const totalImages = images.length
+
+    images.forEach(image => {
+      const img = new Image()
+      img.onload = () => {
+        loadedCount++
+        loadingProgress.value = Math.floor((loadedCount / totalImages) * 100)
+        if (loadedCount === totalImages) {
+          imagesLoaded.value = true
+          resolve()
+        }
+      }
+      img.onerror = reject
+      img.src = `${import.meta.env.BASE_URL}${image.replace(/^\//, '')}`
+    })
+  })
+}
+
 // 倒數計時開始
 function startCountdown(value: string) {
   selectedLevel.value = value
@@ -132,6 +163,14 @@ function startCountdown(value: string) {
   // 設置倒數計時狀態
   countdownStarted.value = true
   countdownValue.value = 3
+  
+  // 在倒數時就開始準備卡片和預加載圖片
+  cardDeck.value = createImages(level)
+  preloadImages(cardDeck.value).catch(error => {
+    console.error('圖片加載失敗:', error)
+    alert('圖片加載失敗，請重新開始遊戲')
+    resetGame()
+  })
   
   // 開始倒數
   countdownInterval.value = window.setInterval(() => {
@@ -148,33 +187,39 @@ function startCountdown(value: string) {
 
 // 開始遊戲
 function startGame() {
-  const level = parseInt(selectedLevel.value)
-  if (!level) return
-  
-  cardDeck.value = createImages(level)
-  gameStarted.value = true
-  startTimer()
+  if (!imagesLoaded.value) {
+    // 如果圖片還沒加載完，等待加載完成
+    const checkInterval = setInterval(() => {
+      if (imagesLoaded.value) {
+        clearInterval(checkInterval)
+        gameStarted.value = true
+        startTimer()
+      }
+    }, 100)
+  } else {
+    gameStarted.value = true
+    startTimer()
+  }
 }
 
 function resetGame() {
-  // 重置狀態
   selectedLevel.value = ''
   countdownStarted.value = false
   gameStarted.value = false
   countdownValue.value = 3
-  flippedCards.value = []
-  matchedCards.value = []
-  cardDeck.value = []
+  imagesLoaded.value = false
+  loadingProgress.value = 0
   
-  // 停止計時器
-  stopTimer()
-  timer.value = 0
-  
-  // 停止倒數計時器
   if (countdownInterval.value !== null) {
     clearInterval(countdownInterval.value)
     countdownInterval.value = null
   }
+  
+  stopTimer()
+  timer.value = 0
+  flippedCards.value = []
+  matchedCards.value = []
+  cardDeck.value = []
 }
 
 function flipCard(index: number) {
