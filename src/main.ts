@@ -5,6 +5,8 @@ import router from './router'
 import 'element-plus/dist/index.css'
 import * as ElementPlusIconsVue from '@element-plus/icons-vue'
 import 'virtual:windi.css'
+// 引入手繪風格字體
+import './assets/hand-drawn-fonts.css'
 
 const app = createApp(App)
 

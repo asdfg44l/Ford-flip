@@ -1,0 +1,7 @@
+/* 引入 Architects Daughter 字體 - 優雅的手繪風格字體 */
+@import url('https://fonts.googleapis.com/css2?family=Architects+Daughter&display=swap');
+
+/* 字體預加載，防止閃爍 */
+body {
+  font-display: swap;
+} 

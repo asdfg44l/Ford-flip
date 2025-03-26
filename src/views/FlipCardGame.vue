@@ -1,15 +1,15 @@
 <template>
   <div
-    class="flex flex-col relative min-h-100vh bg-primary-2 bg-opacity-20 items-center overflow-hidden pb-24 xs:pb-32"
+    class="flex flex-col relative min-h-100vh bg-[#f7f3e9] items-center overflow-hidden pb-24 xs:pb-32 hand-drawn-bg"
   >
-    <h1 class="text-4xl sm:text-3xl xs:text-2xl my-5 text-primary-1">《Ford來摸肚》</h1>
+    <h1 class="text-4xl sm:text-3xl xs:text-2xl my-5 text-[#34495e] hand-drawn-text">《Ford來摸肚》</h1>
     <div
       class="block absolute top-1/5 transition-all duration-800 w-full px-4 text-center"
       :class="{ 'transform -translate-x-200vw': countdownStarted }"
     >
-      <h2 class="text-3xl sm:text-2xl xs:text-xl my-4 text-secondary-3">選擇格子數量</h2>
+      <h2 class="text-3xl sm:text-2xl xs:text-xl my-4 text-[#e74c3c] hand-drawn-text">選擇格子數量</h2>
       <TElSelect
-        class="mt-4 w-full max-w-xs mx-auto"
+        class="mt-4 w-full max-w-xs mx-auto hand-drawn-select"
         :model-value="selectedLevel"
         name="difficulty"
         input-class="text-base"
@@ -23,19 +23,19 @@
       v-if="countdownStarted && !gameStarted"
       class="block absolute top-1/3 flex flex-col items-center justify-center w-full px-4"
     >
-      <h2 class="text-4xl sm:text-3xl xs:text-2xl font-bold text-primary-1 mb-4">遊戲即將開始</h2>
-      <div class="countdown-timer font-bold text-primary-1">
+      <h2 class="text-4xl sm:text-3xl xs:text-2xl font-bold text-[#34495e] mb-4 hand-drawn-text">遊戲即將開始</h2>
+      <div class="countdown-timer font-bold text-[#e74c3c] hand-drawn-text">
         {{ countdownValue }}
       </div>
-      <p class="text-xl sm:text-lg xs:text-base text-secondary-3 mt-4">準備好了嗎？</p>
+      <p class="text-xl sm:text-lg xs:text-base text-[#2980b9] mt-4 hand-drawn-text">準備好了嗎？</p>
       <!-- 加載進度條 -->
-      <div class="mt-8 w-60 sm:w-48 xs:w-40 bg-gray-200 rounded-full h-2.5 dark:bg-gray-700">
+      <div class="mt-8 w-60 sm:w-48 xs:w-40 bg-[#ecf0f1] h-3 hand-drawn-border">
         <div
-          class="bg-primary-1 h-2.5 rounded-full transition-all duration-300"
+          class="bg-[#27ae60] h-3 transition-all duration-300"
           :style="{ width: `${loadingProgress}%` }"
         ></div>
       </div>
-      <p class="text-sm text-secondary-3 mt-2">
+      <p class="text-sm text-[#7f8c8d] mt-2 hand-drawn-text">
         圖片加載中... {{ loadingProgress }}%
       </p>
     </div>
@@ -45,13 +45,13 @@
       :style="{ display: gameStarted ? 'block' : 'none' }"
     >
       <div class="text-2xl sm:text-xl xs:text-lg mb-6 sm:mb-4 text-center">
-        <span class="text-secondary-3">計時器:</span>
-        <span class="timer font-bold text-primary-1">{{
+        <span class="text-[#7f8c8d] hand-drawn-text">計時器:</span>
+        <span class="timer font-bold text-[#e67e22] hand-drawn-text">{{
           timer.toFixed(2)
         }}</span>
       </div>
       <div
-        class="grid justify-items-center items-center mx-auto"
+        class="grid justify-items-center items-center mx-auto hand-drawn-grid"
         :class="[
           !gridClass ? 'grid-cols-3 gap-2.5 sm:gap-2 xs:gap-1.5 w-full max-w-[28rem] mx-auto' : '',
           gridClass === 'middle' ? 'grid-cols-4 gap-2 sm:gap-1.5 xs:gap-1 w-full max-w-[32rem] mx-auto' : '',
@@ -62,14 +62,14 @@
         <div
           v-for="(image, index) in cardDeck"
           :key="index"
-          class="card-item bg-secondary-2 text-2xl cursor-pointer bg-cover bg-center rounded-lg shadow-md hover:shadow-lg w-full h-full"
-          :class="{ 'bg-secondary-2 !bg-none': !isFlipped(index) }"
+          class="card-item bg-[#ecf0f1] text-2xl cursor-pointer bg-cover bg-center w-full h-full hand-drawn-card"
+          :class="{ 'bg-[#ecf0f1] !bg-none': !isFlipped(index) }"
           :style="cardStyle(index)"
           @click="flipCard(index)"
         ></div>
       </div>
       <div class="text-center mt-5">
-        <el-button type="success" class="btn btn-lg xs:btn-md" @click="resetGame">
+        <el-button type="success" class="btn btn-lg xs:btn-md hand-drawn-button" @click="resetGame">
           重置遊戲
         </el-button>
       </div>
@@ -450,7 +450,12 @@ onUnmounted(() => {
 
 .countdown-timer {
   font-size: 8rem;
-  animation: pulse 1s infinite;
+  animation: shake 1s infinite;
+}
+
+@keyframes shake {
+  0%, 100% { transform: rotate(-3deg); }
+  50% { transform: rotate(3deg); }
 }
 
 @media (max-width: 640px) {
@@ -465,32 +470,22 @@ onUnmounted(() => {
   }
 }
 
-@keyframes pulse {
-  0% {
-    transform: scale(1);
-  }
-  50% {
-    transform: scale(1.1);
-  }
-  100% {
-    transform: scale(1);
-  }
-}
-
 /* 製作團隊資訊樣式 */
 .team-info {
   position: fixed;
   bottom: 0;
   left: 0;
   width: 100%;
-  background-color: rgba(0, 0, 0, 0.7);
-  color: #fff;
+  background-color: rgba(255, 249, 235, 0.9);
+  color: #34495e;
   padding: 0.6rem 0;
   text-align: center;
   font-size: 0.9rem;
   backdrop-filter: blur(5px);
-  border-top: 1px solid rgba(255, 165, 0, 0.3);
+  border-top: 3px solid #e67e22;
+  border-image: url("data:image/svg+xml;charset=utf-8,%3Csvg width='100' height='8' viewBox='0 0 100 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 4C25 4 25 8 50 8C75 8 75 4 100 4C100 4 75 0 50 0C25 0 25 4 0 4Z' fill='%23e67e22'/%3E%3C/svg%3E") 1 stretch;
   z-index: 10;
+  font-family: 'Architects Daughter', 'Comic Sans MS', cursive;
 }
 
 .team-info-content {
@@ -510,13 +505,13 @@ onUnmounted(() => {
 }
 
 .team-role {
-  color: #ccc;
+  color: #7f8c8d;
   text-align: center;
   margin-bottom: 0.2rem;
 }
 
 .team-name {
-  color: #ffa500;
+  color: #e67e22;
   font-weight: bold;
 }
 
@@ -557,5 +552,116 @@ onUnmounted(() => {
     font-size: 0.65rem;
     line-height: 1.2;
   }
+}
+
+/* 手繪風格 */
+.hand-drawn-text {
+  font-family: 'Architects Daughter', 'Comic Sans MS', cursive;
+  letter-spacing: 0.5px;
+}
+
+.hand-drawn-bg {
+  background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg width='100' height='100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%23bdc3c7' fill-opacity='0.1' fill-rule='evenodd'/%3E%3C/svg%3E"),
+    url("data:image/svg+xml;charset=utf-8,%3Csvg width='52' height='26' viewBox='0 0 52 26' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%233498db' fill-opacity='0.05'%3E%3Cpath d='M10 10c0-2.21-1.79-4-4-4-3.314 0-6-2.686-6-6h2c0 2.21 1.79 4 4 4 3.314 0 6 2.686 6 6 0 2.21 1.79 4 4 4 3.314 0 6 2.686 6 6 0 2.21 1.79 4 4 4 3.314 0 6 2.686 6 6h-2c0-2.21-1.79-4-4-4-3.314 0-6-2.686-6-6 0-2.21-1.79-4-4-4-3.314 0-6-2.686-6-6zm25.464-1.95l8.486 8.486-1.414 1.414-8.486-8.486 1.414-1.414z' /%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+}
+
+.hand-drawn-card {
+  border: 3px solid #34495e;
+  border-radius: 5px;
+  background-color: white;
+  box-shadow: 4px 4px 0 rgba(52, 73, 94, 0.2);
+  position: relative;
+  transition: all 0.2s ease;
+  transform: rotate(var(--rotation, 0deg));
+  --rotation: calc(random() * 4deg - 2deg);
+}
+
+.hand-drawn-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg width='100' height='100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0,0 L100,100 M100,0 L0,100' stroke='%2334495e' stroke-width='0.5' opacity='0.1'/%3E%3C/svg%3E");
+  opacity: 0.2;
+  pointer-events: none;
+}
+
+.hand-drawn-card:hover {
+  transform: translateY(-5px) rotate(var(--rotation));
+  box-shadow: 6px 8px 0 rgba(52, 73, 94, 0.3);
+}
+
+.hand-drawn-grid {
+  padding: 15px;
+  background-color: rgba(255, 255, 255, 0.8);
+  border: 3px solid #34495e;
+  border-radius: 10px;
+  box-shadow: 0 0 0 4px rgba(52, 73, 94, 0.1);
+  position: relative;
+}
+
+.hand-drawn-grid::before {
+  content: '';
+  position: absolute;
+  top: -8px;
+  left: -8px;
+  right: -8px;
+  bottom: -8px;
+  border: 2px dashed #e67e22;
+  border-radius: 15px;
+  opacity: 0.5;
+  z-index: -1;
+}
+
+.hand-drawn-button {
+  background-color: #27ae60 !important;
+  border: 3px solid #229954 !important;
+  border-radius: 10px !important;
+  color: white !important;
+  font-family: 'Architects Daughter', 'Comic Sans MS', cursive !important;
+  position: relative !important;
+  box-shadow: 0 4px 0 #1e8449 !important;
+  transition: all 0.2s ease !important;
+  transform: rotate(-1deg) !important;
+}
+
+.hand-drawn-button:hover {
+  transform: translateY(-2px) rotate(1deg) !important;
+  box-shadow: 0 6px 0 #1e8449 !important;
+}
+
+.hand-drawn-button:active {
+  transform: translateY(2px) rotate(0deg) !important;
+  box-shadow: 0 1px 0 #1e8449 !important;
+}
+
+.hand-drawn-select :deep(.el-input__wrapper) {
+  background-color: white !important;
+  border: 3px solid #34495e !important;
+  border-radius: 10px !important;
+  box-shadow: none !important;
+  transform: rotate(-0.5deg) !important;
+}
+
+.hand-drawn-select :deep(.el-input__inner) {
+  color: #34495e !important;
+  font-family: 'Architects Daughter', 'Comic Sans MS', cursive !important;
+}
+
+.hand-drawn-select :deep(.el-select-dropdown__item) {
+  font-family: 'Architects Daughter', 'Comic Sans MS', cursive !important;
+}
+
+.hand-drawn-select :deep(.el-select-dropdown__item.selected) {
+  color: #e67e22 !important;
+  background-color: #ecf0f1 !important;
+}
+
+.hand-drawn-border {
+  border: 2px solid #34495e;
+  border-radius: 5px;
+  background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg width='6' height='6' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M5 0h1L0 6V5zm1 5v1H5z' fill='%23e67e22' fill-opacity='.1' fill-rule='evenodd'/%3E%3C/svg%3E");
 }
 </style>
