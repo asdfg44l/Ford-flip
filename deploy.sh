@@ -31,7 +31,7 @@ pnpm run build
 git checkout -B gh-pages
 
 # 添加構建文件
-git add -f docs/
+git add .
 git commit -m "chore: deploy version $NEW_VERSION"
 
 # 強制推送到 gh-pages
@@ -40,18 +40,3 @@ git push -f origin gh-pages
 # 切回 master 分支並推送版本更新
 git checkout master
 git push origin master
-
-# 移動到打包資料夾下，若你有調整的話打包後的資料夾請務必調整
-cd docs
-
-# 清理舊的 git 倉庫
-rm -rf .git
-
-# 部署到自定義網域
-# echo 'www.example.com' > CNAME
-
-git init
-git add -A
-git commit -m "deploy: version $NEW_VERSION"
-
-# 部署到 https://<USERNAME>.github.io/<REPO>
