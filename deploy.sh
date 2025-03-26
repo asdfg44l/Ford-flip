@@ -26,11 +26,13 @@ git commit -m "chore: bump version to $NEW_VERSION"
 
 # 切換到 gh-pages 分支
 git checkout -B gh-pages
+git checkout .
 git rebase master
 
 # 添加構建文件
 # 打包編譯
 pnpm run build
+git add -f ./docs
 git commit -m "chore: deploy version $NEW_VERSION"
 
 # 強制推送到 gh-pages
