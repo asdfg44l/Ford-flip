@@ -40,25 +40,14 @@ export default defineConfig({
     }),
     // 自動導入 Element Plus 相關 API
     AutoImport({
-      resolvers: [
-        ElementPlusResolver(),
-      ],
+      resolvers: [ElementPlusResolver()],
       imports: [
         'vue',
         'vue-router',
         {
-          'vee-validate': [
-            'useField',
-            'useForm'
-          ],
-          'yup': [
-            'object',
-            'string',
-            'number',
-            'array',
-            'boolean'
-          ],
-        }
+          'vee-validate': ['useField', 'useForm'],
+          yup: ['object', 'string', 'number', 'array', 'boolean'],
+        },
       ],
       // 自動導入 Vue 的 ref 和 reactive
       dirs: ['src/composables'],
@@ -83,5 +72,8 @@ export default defineConfig({
       },
     },
   },
+  build: {
+    outDir: './docs',
+    emptyOutDir: true, // also necessary
+  },
 })
-
