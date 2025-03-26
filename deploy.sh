@@ -24,14 +24,13 @@ sed -i '' "s/\"version\": \"$VERSION\"/\"version\": \"$NEW_VERSION\"/" package.j
 git add package.json
 git commit -m "chore: bump version to $NEW_VERSION"
 
-# 打包編譯
-pnpm run build
-
 # 切換到 gh-pages 分支
 git checkout -B gh-pages
+git rebase master
 
 # 添加構建文件
-git add -f docs/
+# 打包編譯
+pnpm run build
 git commit -m "chore: deploy version $NEW_VERSION"
 
 # 強制推送到 gh-pages
