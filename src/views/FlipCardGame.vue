@@ -197,7 +197,7 @@ function isFlipped(index: number): boolean {
 
 function cardStyle(index: number) {
   if (isFlipped(index)) {
-    return { backgroundImage: `url(${cardDeck.value[index]})` }
+    return { backgroundImage: `url(${import.meta.env.BASE_URL}${cardDeck.value[index]})` }
   }
   return {}
 }
