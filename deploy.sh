@@ -31,7 +31,7 @@ pnpm run build
 git checkout -B gh-pages
 
 # 添加構建文件
-git add .
+git add -f docs/
 git commit -m "chore: deploy version $NEW_VERSION"
 
 # 強制推送到 gh-pages
