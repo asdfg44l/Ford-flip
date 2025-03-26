@@ -72,7 +72,7 @@ export default defineConfig({
       },
     },
   },
-  base: './',
+  base: '/Ford-flip/',
   build: {
     outDir: './docs',
     emptyOutDir: true, // also necessary
