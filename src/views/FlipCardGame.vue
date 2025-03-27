@@ -2,12 +2,20 @@
   <div
     class="flex flex-col relative min-h-100vh bg-[#f7f3e9] items-center overflow-hidden pb-24 xs:pb-32 hand-drawn-bg"
   >
-    <h1 class="text-4xl sm:text-3xl xs:text-2xl my-5 text-[#34495e] hand-drawn-text">《Ford來摸肚》</h1>
+    <h1
+      class="text-4xl sm:text-3xl xs:text-2xl my-5 text-[#34495e] hand-drawn-text"
+    >
+      《Ford來摸肚》
+    </h1>
     <div
       class="block absolute top-1/5 transition-all duration-800 w-full px-4 text-center"
       :class="{ 'transform -translate-x-200vw': countdownStarted }"
     >
-      <h2 class="text-3xl sm:text-2xl xs:text-xl my-4 text-[#e74c3c] hand-drawn-text">選擇格子數量</h2>
+      <h2
+        class="text-3xl sm:text-2xl xs:text-xl my-4 text-[#e74c3c] hand-drawn-text"
+      >
+        選擇格子數量
+      </h2>
       <TElSelect
         class="mt-4 w-full max-w-xs mx-auto hand-drawn-select"
         :model-value="selectedLevel"
@@ -23,11 +31,19 @@
       v-if="countdownStarted && !gameStarted"
       class="block absolute top-1/3 flex flex-col items-center justify-center w-full px-4"
     >
-      <h2 class="text-4xl sm:text-3xl xs:text-2xl font-bold text-[#34495e] mb-4 hand-drawn-text">遊戲即將開始</h2>
+      <h2
+        class="text-4xl sm:text-3xl xs:text-2xl font-bold text-[#34495e] mb-4 hand-drawn-text"
+      >
+        遊戲即將開始
+      </h2>
       <div class="countdown-timer font-bold text-[#e74c3c] hand-drawn-text">
         {{ countdownValue }}
       </div>
-      <p class="text-xl sm:text-lg xs:text-base text-[#2980b9] mt-4 hand-drawn-text">準備好了嗎？</p>
+      <p
+        class="text-xl sm:text-lg xs:text-base text-[#2980b9] mt-4 hand-drawn-text"
+      >
+        準備好了嗎？
+      </p>
       <!-- 加載進度條 -->
       <div class="mt-8 w-60 sm:w-48 xs:w-40 bg-[#ecf0f1] h-3 hand-drawn-border">
         <div
@@ -53,9 +69,15 @@
       <div
         class="grid justify-items-center items-center mx-auto hand-drawn-grid"
         :class="[
-          !gridClass ? 'grid-cols-3 gap-2.5 sm:gap-2 xs:gap-1.5 w-full max-w-[28rem] mx-auto' : '',
-          gridClass === 'middle' ? 'grid-cols-4 gap-2 sm:gap-1.5 xs:gap-1 w-full max-w-[32rem] mx-auto' : '',
-          gridClass === 'hard' ? 'grid-cols-5 xs:grid-cols-4 gap-2 sm:gap-1.5 xs:gap-1 w-full max-w-[36rem] mx-auto' : ''
+          !gridClass
+            ? 'grid-cols-3 gap-2.5 sm:gap-2 xs:gap-1.5 w-full max-w-[28rem] mx-auto'
+            : '',
+          gridClass === 'middle'
+            ? 'grid-cols-4 gap-2 sm:gap-1.5 xs:gap-1 w-full max-w-[32rem] mx-auto'
+            : '',
+          gridClass === 'hard'
+            ? 'grid-cols-5 xs:grid-cols-4 gap-2 sm:gap-1.5 xs:gap-1 w-full max-w-[36rem] mx-auto'
+            : '',
         ]"
         ref="gameGrid"
       >
@@ -69,7 +91,11 @@
         ></div>
       </div>
       <div class="text-center mt-5">
-        <el-button type="success" class="btn btn-lg xs:btn-md hand-drawn-button" @click="resetGame">
+        <el-button
+          type="success"
+          class="btn btn-lg xs:btn-md hand-drawn-button"
+          @click="resetGame"
+        >
           重置遊戲
         </el-button>
       </div>
@@ -103,7 +129,7 @@ import { ref, computed, onUnmounted } from 'vue'
 // 根據 level 決定圖片數量
 function imageAmount(level: number): number {
   let imageAmountPools = [3]
-  if (level >= 12) imageAmountPools = [level / 2, level / 4]
+  if (level >= 12) imageAmountPools = [level / 4]
 
   imageAmountPools.sort(() => Math.random() - 0.5)
 
@@ -385,12 +411,12 @@ onUnmounted(() => {
     width: 6rem;
     height: 6rem;
   }
-  
+
   .grid-cols-4 .card-item {
     width: 5rem;
     height: 5rem;
   }
-  
+
   .grid-cols-5 .card-item {
     width: 3.8rem;
     height: 3.8rem;
@@ -402,12 +428,12 @@ onUnmounted(() => {
     width: 5.5rem;
     height: 5.5rem;
   }
-  
+
   .grid-cols-4 .card-item {
     width: 4.5rem;
     height: 4.5rem;
   }
-  
+
   .xs\:grid-cols-4 .card-item {
     width: 4.5rem;
     height: 4.5rem;
@@ -419,12 +445,12 @@ onUnmounted(() => {
     width: 5rem;
     height: 5rem;
   }
-  
+
   .grid-cols-4 .card-item {
     width: 4rem;
     height: 4rem;
   }
-  
+
   .xs\:grid-cols-4 .card-item {
     width: 4rem;
     height: 4rem;
@@ -436,12 +462,12 @@ onUnmounted(() => {
     width: 4.5rem;
     height: 4.5rem;
   }
-  
+
   .grid-cols-4 .card-item {
     width: 3.5rem;
     height: 3.5rem;
   }
-  
+
   .xs\:grid-cols-4 .card-item {
     width: 3.5rem;
     height: 3.5rem;
@@ -454,8 +480,13 @@ onUnmounted(() => {
 }
 
 @keyframes shake {
-  0%, 100% { transform: rotate(-3deg); }
-  50% { transform: rotate(3deg); }
+  0%,
+  100% {
+    transform: rotate(-3deg);
+  }
+  50% {
+    transform: rotate(3deg);
+  }
 }
 
 @media (max-width: 640px) {
@@ -483,7 +514,8 @@ onUnmounted(() => {
   font-size: 0.9rem;
   backdrop-filter: blur(5px);
   border-top: 3px solid #e67e22;
-  border-image: url("data:image/svg+xml;charset=utf-8,%3Csvg width='100' height='8' viewBox='0 0 100 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 4C25 4 25 8 50 8C75 8 75 4 100 4C100 4 75 0 50 0C25 0 25 4 0 4Z' fill='%23e67e22'/%3E%3C/svg%3E") 1 stretch;
+  border-image: url("data:image/svg+xml;charset=utf-8,%3Csvg width='100' height='8' viewBox='0 0 100 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 4C25 4 25 8 50 8C75 8 75 4 100 4C100 4 75 0 50 0C25 0 25 4 0 4Z' fill='%23e67e22'/%3E%3C/svg%3E")
+    1 stretch;
   z-index: 10;
   font-family: 'Architects Daughter', 'Comic Sans MS', cursive;
 }
@@ -528,15 +560,15 @@ onUnmounted(() => {
     gap: 0.3rem;
     padding: 0 0.5rem;
   }
-  
+
   .team-info {
     padding: 0.5rem 0;
   }
-  
+
   .team-member {
     margin-bottom: 0.1rem;
   }
-  
+
   .team-role {
     margin-bottom: 0.1rem;
   }
@@ -547,8 +579,9 @@ onUnmounted(() => {
     font-size: 0.7rem;
     padding: 0.5rem 0;
   }
-  
-  .team-role, .team-name {
+
+  .team-role,
+  .team-name {
     font-size: 0.65rem;
     line-height: 1.2;
   }
