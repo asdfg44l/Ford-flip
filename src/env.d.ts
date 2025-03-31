@@ -6,3 +6,5 @@ declare module '*.vue' {
   const component: DefineComponent<{}, {}, any>
   export default component
 } 
+// 添加版本號
+declare const __APP_VERSION__: string

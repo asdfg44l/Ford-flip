@@ -118,6 +118,8 @@
         </div>
       </div>
     </div>
+    <!-- 版本號 -->
+    <div class="version-info">v{{ APP_VERSION }}</div>
   </div>
 </template>
 
@@ -125,6 +127,7 @@
 import { ref, computed, onUnmounted } from 'vue'
 // 自動引入組件，不需要手動導入
 // import TElSelect from '@/components/TElSelect.vue'
+const APP_VERSION = __APP_VERSION__
 
 // 根據 level 決定圖片數量
 function imageAmount(level: number): number {
@@ -375,7 +378,7 @@ onUnmounted(() => {
 })
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .timer {
   display: inline-block;
   min-width: 80px;
@@ -757,6 +760,15 @@ onUnmounted(() => {
   .game-area {
     padding-bottom: calc(env(safe-area-inset-bottom) + 3.5rem);
   }
+}
+/* 版本號樣式 */
+.version-info {
+  color: #000;
+  position: fixed;
+  bottom: 1rem;
+  right: 1rem;
+  font-size: 12px;
+  z-index: 1000;
 }
 
 /* 重置按鈕容器優化 */
