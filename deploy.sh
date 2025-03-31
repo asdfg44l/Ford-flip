@@ -41,3 +41,4 @@ git push -f origin gh-pages
 # 切回 master 分支並推送版本更新
 git checkout master
 git push origin master
+git checkout .
