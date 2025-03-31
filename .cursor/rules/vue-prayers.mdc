@@ -1,0 +1,67 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+
+# Your rule content
+
+- You can @ files here
+- You can use markdown but dont have to
+您是一位精通 TypeScript、Node.js、NuxtJS、Vue 3、Shadcn Vue、Radix Vue、VueUse 和 Tailwind 的專家。
+
+### 程式碼風格與結構
+- 撰寫簡潔且技術性的 TypeScript 程式碼，並提供準確的範例。
+- 使用組合式 API 和宣告式程式設計模式；避免選項式 API。
+- 偏好迭代和模組化，避免程式碼重複。
+- 使用帶有輔助動詞的描述性變數名稱（例如：`isLoading`、`hasError`）。
+- 檔案結構：匯出的元件、composables、helpers、靜態內容、類型。
+
+### 命名慣例
+- 目錄名稱使用小寫並以破折號分隔（例如：`components/auth-wizard`）。
+- 元件名稱使用 PascalCase（例如：`AuthWizard.vue`）。
+- composables 使用 camelCase（例如：`useAuthState.ts`）。
+
+### TypeScript 使用
+- 所有程式碼都使用 TypeScript；偏好使用 `type` 而非 `interface`。
+- 避免使用 `enum`；改用 `const` 物件。
+- 使用 Vue 3 搭配 TypeScript，善用 `defineComponent` 和 `PropType`。
+
+### 語法與格式化
+- 方法和計算屬性使用箭頭函式。
+- 避免在條件式中使用不必要的花括號；簡單語句使用簡潔語法。
+- 使用模板語法進行宣告式渲染。
+
+### UI 與樣式
+- 使用 Shadcn Vue、Radix Vue 和 Tailwind 來設計元件和樣式。
+- 使用 Tailwind CSS 實現響應式設計；採用行動優先的方法。
+
+### 效能優化
+- 善用 Nuxt 的內建效能優化功能。
+- 使用 `Suspense` 處理非同步元件。
+- 實現路由和元件的懶加載。
+- 圖片優化：使用 WebP 格式、包含尺寸資訊、實現懶加載。
+
+### 關鍵慣例
+- 使用 VueUse 處理常見的 composables 和工具函式。
+- 使用 Pinia 進行狀態管理。
+- 優化 Web Vitals（LCP、CLS、FID）。
+- 利用 Nuxt 的自動匯入功能來處理元件和 composables。
+
+### Nuxt 特定指南
+- 遵循 Nuxt 3 的目錄結構（例如：`pages/`、`components/`、`composables/`）。
+- 使用 Nuxt 的內建功能：
+  - 元件和 composables 的自動匯入。
+  - `pages/` 目錄中的檔案式路由。
+  - `server/` 目錄中的伺服器路由。
+  - 使用 Nuxt 插件實現全域功能。
+- 使用 `useFetch` 和 `useAsyncData` 進行資料獲取。
+- 使用 Nuxt 的 `useHead` 和 `useSeoMeta` 實現 SEO 最佳實踐。
+
+### Vue 3 與組合式 API 最佳實踐
+- 使用 `<script setup>` 語法來簡潔地定義元件。
+- 善用 `ref`、`reactive` 和 `computed` 來管理響應式狀態。
+- 在適當情況下使用 `provide/inject` 進行依賴注入。
+- 實現自定義 composables 以重用邏輯。
+
+請遵循官方 Nuxt.js 和 Vue.js 文件，以獲取有關資料獲取、渲染和路由的最新最佳實踐。

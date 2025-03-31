@@ -1,6 +1,6 @@
 <template>
   <div
-    class="flex flex-col relative min-h-100vh bg-[#f7f3e9] items-center overflow-hidden pb-24 xs:pb-32 hand-drawn-bg"
+    class="flex flex-col relative min-h-100vh bg-[#f7f3e9] items-center overflow-hidden pb-24 xs:pb-32 hand-drawn-bg safari-padding"
   >
     <h1
       class="text-4xl sm:text-3xl xs:text-2xl my-5 text-[#34495e] hand-drawn-text"
@@ -57,7 +57,7 @@
     </div>
 
     <div
-      class="block absolute top-1/5 w-full px-2 sm:px-4"
+      class="block absolute top-1/5 w-full px-2 sm:px-4 game-area"
       :style="{ display: gameStarted ? 'block' : 'none' }"
     >
       <div class="text-2xl sm:text-xl xs:text-lg mb-6 sm:mb-4 text-center">
@@ -90,7 +90,7 @@
           @click="flipCard(index)"
         ></div>
       </div>
-      <div class="text-center mt-5">
+      <div class="text-center mt-5 mb-20 xs:mb-16 sm:mb-12">
         <el-button
           type="success"
           class="btn btn-lg xs:btn-md hand-drawn-button"
@@ -595,7 +595,7 @@ onUnmounted(() => {
 
 .hand-drawn-bg {
   background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg width='100' height='100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%23bdc3c7' fill-opacity='0.1' fill-rule='evenodd'/%3E%3C/svg%3E"),
-    url("data:image/svg+xml;charset=utf-8,%3Csvg width='52' height='26' viewBox='0 0 52 26' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%233498db' fill-opacity='0.05'%3E%3Cpath d='M10 10c0-2.21-1.79-4-4-4-3.314 0-6-2.686-6-6h2c0 2.21 1.79 4 4 4 3.314 0 6 2.686 6 6 0 2.21 1.79 4 4 4 3.314 0 6 2.686 6 6 0 2.21 1.79 4 4 4 3.314 0 6 2.686 6 6h-2c0-2.21-1.79-4-4-4-3.314 0-6-2.686-6-6 0-2.21-1.79-4-4-4-3.314 0-6-2.686-6-6zm25.464-1.95l8.486 8.486-1.414 1.414-8.486-8.486 1.414-1.414z' /%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    url("data:image/svg+xml;charset=utf-8,%3Csvg width='52' height='26' viewBox='0 0 52 26' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%233498db' fill-opacity='0.05'%3E%3Cpath d='M10 10c0-2.21-1.79-4-4-4-3.314 0-6-2.686-6-6h2c0 2.21 1.79 4 4 4 3.314 0 6 2.686 6 6 0 2.21 1.79 4 4 4 3.314 0 6 2.686 6 6 0 2.21 1.79 4 4 4 3.314 0 6 2.686 6 6h-2c0-2.21-1.79-4-4-4-3.314 0-6-2.686-6-6zm25.464-1.95l8.486 8.486-1.414 1.414-8.486-8.486 1.414-1.414z' /%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
 }
 
 .hand-drawn-card {
@@ -696,5 +696,93 @@ onUnmounted(() => {
   border: 2px solid #34495e;
   border-radius: 5px;
   background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg width='6' height='6' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M5 0h1L0 6V5zm1 5v1H5z' fill='%23e67e22' fill-opacity='.1' fill-rule='evenodd'/%3E%3C/svg%3E");
+}
+
+/* Safari 特定優化 */
+@supports (-webkit-touch-callout: none) {
+  .safari-padding {
+    padding-bottom: env(safe-area-inset-bottom);
+    min-height: -webkit-fill-available;
+  }
+  
+  .team-info {
+    padding-bottom: calc(0.6rem + env(safe-area-inset-bottom));
+  }
+  
+  @media (max-width: 640px) {
+    .team-info {
+      padding-bottom: calc(0.5rem + env(safe-area-inset-bottom));
+    }
+  }
+  
+  @media (max-width: 375px) {
+    .team-info {
+      padding-bottom: calc(0.5rem + env(safe-area-inset-bottom));
+    }
+  }
+}
+
+/* 確保在 Safari 上內容不會被底部工具欄遮擋 */
+@supports (-webkit-touch-callout: none) {
+  .game-container {
+    min-height: 100vh;
+    min-height: -webkit-fill-available;
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+}
+
+/* 優化 Safari 上的滾動行為 */
+@supports (-webkit-touch-callout: none) {
+  .card-item {
+    -webkit-tap-highlight-color: transparent;
+  }
+  
+  .hand-drawn-button {
+    -webkit-tap-highlight-color: transparent;
+  }
+}
+
+/* 遊戲區域底部間距優化 */
+.game-area {
+  padding-bottom: calc(env(safe-area-inset-bottom) + 5rem);
+}
+
+@media (max-width: 640px) {
+  .game-area {
+    padding-bottom: calc(env(safe-area-inset-bottom) + 4rem);
+  }
+}
+
+@media (max-width: 375px) {
+  .game-area {
+    padding-bottom: calc(env(safe-area-inset-bottom) + 3.5rem);
+  }
+}
+
+/* 重置按鈕容器優化 */
+.text-center.mt-5 {
+  position: relative;
+  z-index: 20;
+}
+
+/* 確保在 Safari 上內容不會被底部工具欄遮擋 */
+@supports (-webkit-touch-callout: none) {
+  .game-container {
+    min-height: 100vh;
+    min-height: -webkit-fill-available;
+    padding-bottom: calc(env(safe-area-inset-bottom) + 5rem);
+  }
+  
+  @media (max-width: 640px) {
+    .game-container {
+      padding-bottom: calc(env(safe-area-inset-bottom) + 4rem);
+    }
+  }
+  
+  @media (max-width: 375px) {
+    .game-container {
+      padding-bottom: calc(env(safe-area-inset-bottom) + 3.5rem);
+    }
+  }
 }
 </style>
