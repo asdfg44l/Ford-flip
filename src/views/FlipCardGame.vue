@@ -125,9 +125,13 @@
 
 <script setup lang="ts">
 import { ref, computed, onUnmounted } from 'vue'
+import fordPon from '@/assets/audio/ford_pon.mp3'
 // 自動引入組件，不需要手動導入
 // import TElSelect from '@/components/TElSelect.vue'
 const APP_VERSION = __APP_VERSION__
+
+// 音效相關
+const matchSound = new Audio(fordPon)
 
 // 根據 level 決定圖片數量
 function imageAmount(level: number): number {
@@ -333,6 +337,11 @@ function checkMatch() {
     const matched = () => {
       matchedCards.value.push(...flippedCards.value)
       flippedCards.value = []
+      // 播放配對成功音效
+      matchSound.currentTime = 0
+      matchSound.play().catch(error => {
+        console.error('播放音效失敗:', error)
+      })
     }
 
     // 已經翻到最後一組卡片
